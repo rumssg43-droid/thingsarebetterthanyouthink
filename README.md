@@ -1,6 +1,8 @@
-# Good News Generator
+# Things Are Better Than You Think
 
-A fresh dose of good news every time you refresh. Claude searches a curated list of positive-news sites, writes summaries, and saves them to a JSON cache. The site picks a random story from the cache on every page load.
+An evidence-based antidote to the doom cycle. A single story about how humanity is quietly winning, every time you refresh.
+
+Claude searches rigorous progress journalism — Our World in Data, Fix The News, Human Progress, Reasons to be Cheerful, the Guardian Upside — writes summaries, and saves ~20 structural-progress stories to a JSON cache. The site picks a random one on every page load.
 
 ## Setup
 
@@ -12,13 +14,13 @@ npm install
 
 ## Refresh the story pool
 
-Runs Claude with web search and overwrites `data/stories.json`. Takes a minute or two and costs a few cents per run.
+Runs Claude with web search and overwrites `data/stories.json`. Takes a few minutes and costs a few cents per run.
 
 ```bash
 npm run refresh
 ```
 
-Re-run whenever you want fresh stories (e.g. daily via cron or GitHub Actions).
+Re-run whenever you want a fresh pool (weekly is fine).
 
 ## Run locally
 
@@ -26,14 +28,14 @@ Re-run whenever you want fresh stories (e.g. daily via cron or GitHub Actions).
 npm run dev
 ```
 
-Open <http://localhost:3000>. Each refresh shows a new random story from the cache.
+Open <http://localhost:3000>. Every refresh shows a new random story.
 
 ## How it works
 
-- `scripts/refresh-stories.ts` — one-shot Claude call with `web_search_20260209` + `web_fetch_20260209`. Returns ~30 stories as JSON, written to `data/stories.json`.
-- `app/page.tsx` — server component, `dynamic = "force-dynamic"` so every request picks a fresh random story.
-- `lib/stories.ts` — reads the cache, picks randomly, fetches the article's OpenGraph image on-demand (cached 24h by Next.js).
+- `scripts/refresh-stories.ts` — Claude Opus 4.7 with `web_search_20260209`. Prompt explicitly favors structural civilization-scale progress (disease eradication, poverty decline, renewables milestones, rewilding) over individual feel-good stories. Writes to `data/stories.json`.
+- `app/page.tsx` — server component with `dynamic = "force-dynamic"`, picks a random story per request.
+- `lib/stories.ts` — reads cache, picks random, fetches the article's OpenGraph image on-demand (cached 24h).
 
 ## Deploy
 
-Vercel works out of the box. Add `ANTHROPIC_API_KEY` as an env var. To refresh the cache on a schedule, run `npm run refresh` in GitHub Actions and commit the updated `data/stories.json`.
+Railway or Vercel both work. Add `ANTHROPIC_API_KEY` as an env var. To refresh the cache, run `npm run refresh` locally, commit the updated `data/stories.json`, and push — the host auto-redeploys.

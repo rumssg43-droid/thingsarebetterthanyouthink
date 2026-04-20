@@ -14,9 +14,15 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Good News Generator",
+  title: "Things Are Better Than You Think",
   description:
-    "A fresh dose of good news every time you refresh. Curated from the web's best positive-news sources.",
+    "An evidence-based antidote to the doom cycle. A single story about how humanity is quietly winning, every time you refresh.",
+  openGraph: {
+    title: "Things Are Better Than You Think",
+    description:
+      "An evidence-based antidote to the doom cycle. A single story about how humanity is quietly winning, every time you refresh.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

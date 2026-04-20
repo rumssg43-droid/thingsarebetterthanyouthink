@@ -8,83 +8,97 @@ export default async function Home() {
   const imageUrl = story.image_url ?? (await fetchOgImage(story.source_url));
 
   const updated = new Date(generated_at).toLocaleDateString(undefined, {
-    month: "short",
+    month: "long",
     day: "numeric",
     year: "numeric",
   });
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      <div aria-hidden className="bg-glow" />
-
-      <nav className="relative z-10 flex items-center justify-between px-6 py-6 md:px-12">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">☀️</span>
-          <span className="font-serif text-xl tracking-tight text-stone-900">
-            Good News Generator
-          </span>
+    <main className="min-h-screen">
+      <header className="border-b border-ink/10">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-10">
+          <a
+            href="/"
+            className="font-serif text-[15px] leading-none tracking-tight text-ink md:text-base"
+          >
+            Things Are Better
+            <span className="text-accent"> Than You Think</span>
+          </a>
+          <a
+            href="/"
+            className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-ink/70 transition hover:text-ink"
+          >
+            Another reason
+            <span
+              aria-hidden
+              className="inline-block transition group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </a>
         </div>
-        <a
-          href="/"
-          className="rounded-full border border-stone-900/10 bg-white/70 px-4 py-2 text-sm font-medium text-stone-800 backdrop-blur transition hover:border-stone-900/30 hover:bg-white"
-        >
-          ↻ New story
-        </a>
-      </nav>
+      </header>
 
-      <section className="relative z-10 mx-auto flex max-w-5xl flex-col px-6 pb-16 md:px-12">
-        <div className="mb-6 flex items-center gap-2 text-sm text-stone-700">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Today&apos;s uplift
-          </span>
-          <span className="text-stone-500">·</span>
-          <span className="text-stone-500">{story.source_name}</span>
+      <article className="mx-auto max-w-3xl px-6 pb-24 pt-12 md:px-10 md:pt-20">
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-ink/50">
+          <span className="text-accent">The Evidence</span>
+          <span aria-hidden>·</span>
+          <span>{story.source_name}</span>
         </div>
 
-        <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-stone-900 md:text-7xl">
+        <h1 className="font-serif mt-7 text-4xl leading-[1.08] tracking-tight text-ink md:text-6xl md:leading-[1.03]">
           {story.title}
         </h1>
 
         {imageUrl && (
-          <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/40 shadow-[0_30px_80px_-30px_rgba(20,20,20,0.35)]">
+          <figure className="mt-12">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
               alt={story.title}
-              className="h-[360px] w-full object-cover md:h-[480px]"
+              className="aspect-[16/10] w-full border border-ink/10 object-cover"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-          </div>
+          </figure>
         )}
 
-        <p className="mt-10 max-w-3xl text-xl leading-relaxed text-stone-800 md:text-2xl">
+        <p className="mt-12 font-serif text-xl leading-[1.55] text-ink/90 md:text-[1.6rem] md:leading-[1.5]">
           {story.summary}
         </p>
 
-        <div className="mt-12 flex flex-wrap items-center gap-4">
+        <div className="mt-14 flex flex-col gap-4 border-t border-ink/10 pt-8 md:flex-row md:items-center md:gap-6">
           <a
             href={story.source_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-stone-800"
+            className="group inline-flex items-center gap-2 self-start border border-ink bg-ink px-5 py-3 text-[13px] font-medium text-cream transition hover:bg-accent hover:border-accent"
           >
-            Read the full story at {story.source_name}
-            <span className="transition group-hover:translate-x-0.5">→</span>
+            Read the full story
+            <span
+              aria-hidden
+              className="transition group-hover:translate-x-0.5"
+            >
+              →
+            </span>
           </a>
           <a
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-stone-900/15 bg-white/70 px-6 py-3 text-sm font-medium text-stone-800 backdrop-blur transition hover:border-stone-900/30 hover:bg-white"
+            className="inline-flex items-center gap-2 self-start border border-ink/20 px-5 py-3 text-[13px] font-medium text-ink transition hover:border-ink"
           >
-            Refresh for another
+            Show me another
           </a>
         </div>
-      </section>
+      </article>
 
-      <footer className="relative z-10 mx-auto max-w-5xl px-6 pb-10 text-xs text-stone-500 md:px-12">
-        <div className="border-t border-stone-900/10 pt-6">
-          Stories curated by Claude from good-news sources around the web. Last
-          refreshed {updated}.
+      <footer className="border-t border-ink/10">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-xs text-ink/60 md:flex-row md:items-center md:justify-between md:px-10">
+          <p className="max-w-lg">
+            An evidence-based antidote to the doom cycle. Curated by Claude from
+            Our World in Data, Fix The News, Human Progress, and other rigorous
+            progress journalism.
+          </p>
+          <p className="uppercase tracking-[0.18em]">
+            Refreshed {updated}
+          </p>
         </div>
       </footer>
     </main>

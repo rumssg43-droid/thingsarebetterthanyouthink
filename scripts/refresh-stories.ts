@@ -6,23 +6,35 @@ import path from "node:path";
 const client = new Anthropic({ timeout: 600_000 });
 
 const SOURCES = [
-  "goodnewsnetwork.org",
-  "positive.news",
+  "fixthenews.com",
+  "ourworldindata.org",
   "reasonstobecheerful.world",
-  "upworthy.com",
-  "sunnyskyz.com",
+  "theguardian.com/society/series/the-upside",
+  "positive.news",
+  "humanprogress.org",
+  "vox.com/future-perfect",
   "theoptimistdaily.com",
 ];
 
 const STORY_COUNT = 20;
 
-const prompt = `Find ${STORY_COUNT} recent, genuinely uplifting positive-news stories from these sources:
+const prompt = `Find ${STORY_COUNT} recent stories that show humanity is moving in the right direction. Sources:
 
 ${SOURCES.map((s) => `- ${s}`).join("\n")}
 
-Vary the topics widely: scientific breakthroughs, medical advances, acts of kindness, environmental wins, animal rescues, community triumphs, underdog stories, human achievements. Favor recent articles (past few months) and stories that are genuinely heartwarming or inspiring — not puff pieces.
+**What we want:** structural, civilization-scale progress — the things that, decades from now, people will point to and say "we were quietly winning." Examples of the right register:
+- A disease moves closer to eradication (polio, malaria, guinea worm)
+- Renewables or EVs hit a new tipping point
+- A country banishes extreme poverty, child mortality, or illiteracy
+- Major conservation or rewilding victory (species recovered, forest protected)
+- A medical breakthrough that changes the baseline for millions (vaccines, gene therapies, dementia treatments)
+- Climate milestones: emissions peaking, coal phase-outs, ozone layer healing
+- Policy wins on child marriage, maternal mortality, global hunger, violence
+- Scientific leaps with civilization-scale implications
 
-Use ONLY web_search — do NOT use web_fetch. Search-result snippets are enough to craft a title and summary; we'll get article images later. Each story must link to the actual article page (not a category/tag/aggregator page).
+**What we do NOT want:** individual "nice person helped someone" stories, viral acts of kindness, cute animal rescues, hero-dog stories, feel-good local moments. These are lovely but they're not the point of this site. The point is: the big picture is better than the news cycle suggests.
+
+Favor recent articles (past 6 months preferred, past 2 years acceptable). Vary sources — don't pull all ${STORY_COUNT} from one site. Use ONLY web_search — do NOT use web_fetch. Each story must link to the actual article page (not a category/tag/aggregator page).
 
 When you have ${STORY_COUNT} stories, output a single JSON code block with this exact shape. No prose after the JSON.
 
